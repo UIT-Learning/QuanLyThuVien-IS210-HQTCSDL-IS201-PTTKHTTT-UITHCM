@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SachMuonNhieuNhatThang" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ff025e8-6df5-4fa0-82db-3d00afe88dcd">
+	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Năm" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select s.masach, s.tensach, extract(year from pms.ngaymuonsach), extract(month from pms.ngaymuonsach),count(pms.maphieumuon) as solanmuon
+from sach s join phieumuonsach pms  on s.masach=pms.masach
+where extract(year from pms.ngaymuonsach)=$P{Năm}
+group by s.masach,extract(year from pms.ngaymuonsach),s.tensach,extract(month from pms.ngaymuonsach)
+order by extract(month from pms.ngaymuonsach) asc]]>
+	</queryString>
+	<field name="MASACH" class="java.lang.String"/>
+	<field name="TENSACH" class="java.lang.String"/>
+	<field name="EXTRACT(YEARFROMPMS.NGAYMUONSACH)" class="java.math.BigDecimal"/>
+	<field name="EXTRACT(MONTHFROMPMS.NGAYMUONSACH)" class="java.math.BigDecimal"/>
+	<field name="SOLANMUON" class="java.math.BigDecimal"/>
+	<variable name="SOLANMUON_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Thang_Group" calculation="Sum">
+		<variableExpression><![CDATA[$F{SOLANMUON}]]></variableExpression>
+	</variable>
+	<variable name="SOLANMUON_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SOLANMUON}]]></variableExpression>
+	</variable>
+	<group name="Thang_Group">
+		<groupExpression><![CDATA[$F{EXTRACT(MONTHFROMPMS.NGAYMUONSACH)}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="13" y="0" width="43" height="20" uuid="5a52af84-9f78-49e1-8c97-f7f4993d2d9d"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tháng: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="132" y="0" width="100" height="20" uuid="24420de4-d4d8-4006-93f1-1af9cfabc4bc"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mã Sách]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="249" y="0" width="100" height="20" uuid="f14db8e3-842e-4b29-a14c-86def988f265"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tên Sách]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="393" y="0" width="100" height="20" uuid="b9fcd221-c746-4f4d-81fd-cd80ba6ccb3d"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Số Lần Mượn]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="56" y="0" width="38" height="20" uuid="e881d195-722b-4e79-9867-e87a258cbce1"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{EXTRACT(MONTHFROMPMS.NGAYMUONSACH)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField>
+					<reportElement x="471" y="0" width="31" height="20" uuid="c6e927fa-2eda-4c1d-a7a4-600cf2320864"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOLANMUON_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="254" y="0" width="186" height="20" uuid="e128ae7b-dbe3-4490-9a72-67efac73605a"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tổng số lần mượn sách trong tháng:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="153" y="19" width="214" height="1" uuid="a696eafd-6b1c-4545-a879-eea2ba5f3714"/>
+				</line>
+				<textField>
+					<reportElement x="439" y="0" width="15" height="20" uuid="31daafc4-73a7-40b8-82a4-5429b5302230"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{EXTRACT(MONTHFROMPMS.NGAYMUONSACH)}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="455" y="0" width="16" height="20" uuid="6b953a6f-c423-449b-856b-915a97200ed7"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[là:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="502" y="1" width="30" height="20" uuid="4914f1d7-79c9-40b4-a6c3-430120c6ea19"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[lượt.]]></text>
+				</staticText>
+				<image>
+					<reportElement x="262" y="1" width="15" height="10" uuid="619967a9-2ed1-440b-a648-d7e34af78515"/>
+					<imageExpression><![CDATA["Report\\icons8_sigma_10px_1.png"]]></imageExpression>
+				</image>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<rectangle>
+				<reportElement x="56" y="0" width="457" height="80" backcolor="#00CCFF" uuid="c1b36253-8971-45f0-bc38-5f21b9391b5f"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="141" y="11" width="352" height="57" forecolor="#000000" backcolor="#00CCFF" uuid="1c7d5e78-1dca-457d-88a3-3f63b3fbd1d6"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thống kê số lượt mượn sách theo tháng trong năm]]></text>
+			</staticText>
+			<line>
+				<reportElement x="153" y="101" width="214" height="1" uuid="5a1a87e7-88b5-4b72-b063-08d5fc7319c2"/>
+			</line>
+			<image>
+				<reportElement x="81" y="15" width="58" height="43" uuid="ea86d1ad-2c62-42ee-8e5b-3fe298cdd603"/>
+				<imageExpression><![CDATA["Report\\icons8_logbook_40px.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="132" y="0" width="100" height="20" uuid="75ace821-2ff8-43b9-b6ab-a65392d76492"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MASACH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="0" width="100" height="20" uuid="94015946-53bf-4d4c-bf86-65050347bbe2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TENSACH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="100" height="20" uuid="a566a532-b7a1-4ca7-820d-ea619ca2eb55"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SOLANMUON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="60" splitType="Stretch">
+			<rectangle>
+				<reportElement x="249" y="40" width="274" height="20" backcolor="#00CCFF" uuid="256d0996-8df5-4ec0-9dcb-4f9669522e02"/>
+			</rectangle>
+			<textField>
+				<reportElement x="471" y="40" width="27" height="20" uuid="4759dfa8-11f6-4f40-aac8-32d4c7924c3e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SOLANMUON_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="249" y="40" width="179" height="20" uuid="eb1c81c3-096c-43d7-b4b5-18f98d0eebfe"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng số lượt mượn sách trong năm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="40" width="16" height="20" uuid="3386c9cb-72df-452c-b13e-3eb4da2d1915"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[là:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="428" y="40" width="27" height="20" uuid="d809f3cf-8d5b-4cb2-a976-0c932241e33a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXTRACT(YEARFROMPMS.NGAYMUONSACH)}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="493" y="40" width="30" height="20" uuid="9a3fb7c3-675e-491e-87d6-49bd079028d1"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[lượt.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

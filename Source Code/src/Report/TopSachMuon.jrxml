@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TopSachMuon" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36c1f5c9-429e-4539-856b-3a395a999016">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Năm" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select s.masach, s.tensach, extract(year from pms.ngaymuonsach), count(pms.maphieumuon) as solanmuon
+from sach s join phieumuonsach pms  on s.masach=pms.masach
+where extract(year from pms.ngaymuonsach)=$P{Năm}
+group by s.masach,extract(year from pms.ngaymuonsach),s.tensach
+order by solanmuon desc
+FETCH NEXT 5 ROWS ONLY]]>
+	</queryString>
+	<field name="MASACH" class="java.lang.String"/>
+	<field name="TENSACH" class="java.lang.String"/>
+	<field name="EXTRACT(YEARFROMPMS.NGAYMUONSACH)" class="java.math.BigDecimal"/>
+	<field name="SOLANMUON" class="java.math.BigDecimal"/>
+	<title>
+		<band height="175" splitType="Stretch">
+			<staticText>
+				<reportElement x="226" y="124" width="46" height="20" uuid="28fa31cb-c181-4502-8ca3-310b632d08de"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Năm:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="79" y="14" width="393" height="82" backcolor="#00CCFF" uuid="bda98aef-b305-473f-a7f8-b2111db0b8bd"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="166" y="26" width="277" height="58" forecolor="#000000" backcolor="#00CCFF" uuid="76475578-e7e7-41b1-a577-b7afc5603f4e"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Top 5 sách được mượn nhiều nhất theo năm]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="272" y="124" width="62" height="20" uuid="0e6cbe0d-2d56-4f2f-bf2a-b4be2a3510ab"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXTRACT(YEARFROMPMS.NGAYMUONSACH)}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="79" y="156" width="390" height="1" uuid="b5a0bd10-d98b-400d-a8ff-426ebdb3bf4f"/>
+			</line>
+			<image>
+				<reportElement x="112" y="26" width="40" height="40" uuid="1386000c-d995-49a5-bf01-38b36dfe97c9"/>
+				<imageExpression><![CDATA["Report\\icons8_book_reading_40px_1.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="79" y="0" width="393" height="20" backcolor="#00CCFF" uuid="cf54cad7-8cf1-4fa1-9e37-301c01bbc501"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="195" y="0" width="161" height="20" uuid="b4a39c95-9495-4fb0-b8ee-c1111aa44f62"/>
+				<text><![CDATA[Tên sách]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="0" width="100" height="20" uuid="429d9f23-4dcb-4403-9bd2-b1695bb79276"/>
+				<text><![CDATA[Mã sách]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="100" height="20" uuid="73943a0a-7ac3-417b-84f6-8d763ff06fd6"/>
+				<text><![CDATA[Số lần mượn]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="79" y="0" width="393" height="20" backcolor="#00FFFF" uuid="43fd6c4c-0e67-4808-8b0a-78c9731cf20a"/>
+			</rectangle>
+			<textField>
+				<reportElement x="195" y="0" width="161" height="20" uuid="8b791244-6639-4330-9559-536a74e17375"/>
+				<textFieldExpression><![CDATA[$F{TENSACH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="0" width="100" height="20" uuid="0d45be94-7782-44d7-8f35-9dd1fcdc3601"/>
+				<textFieldExpression><![CDATA[$F{SOLANMUON}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="103" height="20" uuid="4df520c8-c85a-4956-b48f-283a10203b2c"/>
+				<textFieldExpression><![CDATA[$F{MASACH}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
